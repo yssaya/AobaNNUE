@@ -9,9 +9,9 @@ AobaNNUEは2025年11月11日時点で、無料で公開されている評価関�
 # 実行ファイル
 [Windows用の実行ファイル(64bit版のみです)](https://github.com/yssaya/aobannue/releases)
 ```
-  AobaNNUE_SSE42.exe ... ほぼ全てのPCで動作します。
   AobaNNUE_AVX2.exe  ... 最近のPCなら動作します。まずこれをお試しください。
-  AobaNNUE_ZEN2.exe  ... AMDの最近のCPUなら、こちらが少し速いです。
+  AobaNNUE_ZEN2.exe  ... AMDの最近のCPUなら、こちらが少し速い、かも。
+  AobaNNUE_SSE42.exe ... ほぼ全てのPCで動作します。AVX2より20%ほど遅いです。
 ```
 
 # ソースの変更点
