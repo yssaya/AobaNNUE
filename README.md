@@ -46,7 +46,7 @@ AobaNNUEは2025年11月11日時点で、無料で公開されている評価関�
   [http://www.yss-aya.com/bbs/patio.cgi?read=210&ukey=0](http://www.yss-aya.com/bbs/patio.cgi?read=210&ukey=0)  
   NNUEの学習をAobaZeroの評価値で試しています  
   [http://www.yss-aya.com/bbs/patio.cgi?read=195&ukey=1](http://www.yss-aya.com/bbs/patio.cgi?read=195&ukey=1)  
-  AobaZeroの2025年の[アピール文書](https://www.apply.computer-shogi.org/wcsc35/appeal/AobaZero/2025csa_appeal.pdf)    
+  AobaZeroの2025年の[アピール文書](https://www.apply.computer-shogi.org/wcsc35/appeal/AobaZero/2025csa_appeal.pdf)  [その2](https://www.apply.computer-shogi.org/wcsc35/appeal/AobaZero/2025csa_appeal2.pdf)  
   評価値書き換えに使った[スクリプト](https://github.com/yssaya/cshogi_aoba/tree/main/psv_shuffle)  
   山岡さんの元の[スクリプト](https://github.com/TadaoYamaoka/DeepLearningShogi/blob/master/dlshogi/utils/hcpe_re_eval.py)  
 
