@@ -34,8 +34,8 @@ AobaNNUEは2025年11月11日時点で、無料で公開されている評価関�
   勝率を評価値に変換(ponanza係数)するのに dlshogi では 756 で変換していたのを 600 に。600の方が +40 ELOほど強いです。
   
   epoch-size=10000000,(minibatch=8192), を32000エポック(3200億局面)を学習、RTX 4090 1枚で15日間  
-  1024_8_96, 512_8_64, 2048_32_32 を試しましたが 768_x2_16_64 が同一時間で一番いい結果でした。  
-  2048_32_32 は2.6倍npsが振電3より遅かったです。  
+  1024x2_8_96, 512x2_8_64, 2048x2_32_32 を試しましたが 768_x2_16_64 が同一時間で一番いい結果でした。  
+  2048x2_32_32 は2.6倍npsが振電3より遅かったです。  
   以下のコマンドで学習させてます。学習率は27000エポックから2000ステップごとに半減
 ```
   $ python3 train.py --features "HalfKP" --max_epochs 1000000 --default_root_dir logs/20250930 --lr 0.5 0.05 --num-workers 8 --lambda 1.0 0.5 --label-smoothing-eps 0.001 --accelerator gpu --devices 1 --score-scaling 511 --min-newbob-scale 1e-5 --num-epochs-to-adjust-lr 500 --momentum 0.9 --network-save-period 100 --resume-from-model "" ./shogi_hao_depth9/8_seq_q_aoba_a600.bin ./shogi_hao_depth9/5340981_126_shuffle_q_aoba.bin --enable_progress_bar False
