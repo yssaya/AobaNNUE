@@ -50,7 +50,7 @@ AobaNNUEは2025年11月11日時点で、無料で公開されている評価関�
   評価値書き換えに使った[スクリプト](https://github.com/yssaya/cshogi_aoba/tree/main/psv_shuffle)  
   山岡さんの元の[スクリプト](https://github.com/TadaoYamaoka/DeepLearningShogi/blob/master/dlshogi/utils/hcpe_re_eval.py)  
 
-# Windowの実行ファイルのビルド
+# Windowsの実行ファイルのビルド
   Windows用の実行ファイルはMSYS2 CLANG64でPGO(プロファイル最適化)を行っています。
 ```
   $ make pgo
