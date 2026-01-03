@@ -47,7 +47,7 @@ void TimeManagement::add_options(OptionsMap& options) {
     options.add("MinimumThinkingTime", Option(2000, 1000, 100000));
 
     // 持ち時間固定[ms]  有効な場合、go movetime 100 を上書き。default は 0 で無効。
-    options.add("ConstantThinkingTime", Option(0, 100, 100000));
+    options.add("ConstantThinkingTime", Option(0, 0, 100000));
 
     // 切れ負けのときの思考時間を調整する。序盤重視率。百分率になっている。
     // 例えば200を指定すると本来の最適時間の200%(2倍)思考するようになる。
