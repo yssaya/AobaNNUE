@@ -84,6 +84,17 @@ void add_options_(OptionsMap& options, ThreadPool& threads) {
                     return std::nullopt;
                 }));
 
+#if defined(__EMSCRIPTEN__)
+    // 📝 wasmでは評価関数ファイル名をJS側から指定できるようにする。
+    //     JS側はEmscriptenの仮想FSにファイルを書き出したあと、
+    //     "setoption name EvalFile value ..."を送ってくる。
+    Options.add("EvalFile", Option(EvalFileDefaultName, [](const Option&) {
+                    // 評価関数ファイル名の変更に際して、読み込みフラグをクリアする。
+                    eval_loaded = false;
+                    return std::nullopt;
+                }));
+#endif
+
     // NNUEのFV_SCALEの値
     Options.add("FV_SCALE", Option(40, 1, 128, [&](const Option& o) {
                     YaneuraOu::Eval::NNUE::FV_SCALE = int(o);
@@ -390,7 +401,7 @@ void load_eval() {
 		const std::string file_name = NNUE::kFileName;
 #else
 		// WASM
-        const std::string file_name = options["EvalFile"];
+        const std::string file_name = Options["EvalFile"];
     #endif
         const Tools::Result result = [&] {
             if (dir_name != "<internal>") {

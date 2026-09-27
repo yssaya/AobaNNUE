@@ -20,6 +20,11 @@
 
 namespace YaneuraOu {
 
+#if defined(__EMSCRIPTEN__)
+// usi_command()の実行先。USIEngine::loop()で登録される。
+static USIEngine* wasm_usi = nullptr;
+#endif
+
 // benchmark用のコマンドその2
 constexpr auto BenchmarkCommand = "speedtest";
 
@@ -160,6 +165,9 @@ void USIEngine::loop()
 #else
 	// yaneuraOu.wasm
 	// ここでループしてしまうと、ブラウザのメインスレッドがブロックされてしまう。
+	// 以後のコマンドはusi_command()経由でこのインスタンスが実行する。
+	// ⚠ 呼び出し元はこのインスタンスをプロセス終了まで保持すること。
+	wasm_usi = this;
 #endif
 }
 
@@ -1798,30 +1806,25 @@ std::string USIEngine::value(Value v)
 
 
 
+#endif
+
 #if defined(__EMSCRIPTEN__)
 // --------------------
 // EMSCRIPTEN support
 // --------------------
-static StateListPtr states(new StateList(1));
 
 // USI応答部 emscriptenインターフェース
-EMSCRIPTEN_KEEPALIVE extern "C" int usi_command(const char *c_cmd) {
-	std::string cmd(c_cmd);
+// 💡 wasm_pre.jsからModule.ccall("usi_command", ...)で呼び出される。
+//     戻り値が1なら、JS側はあとで同じコマンドを再送する。
+EMSCRIPTEN_KEEPALIVE extern "C" int usi_command(const char* c_cmd) {
+	// engine_main()がまだUSIEngine::loop()に到達していない。
+	if (wasm_usi == nullptr)
+		return 1;
 
-	static Position pos;
-	string token;
-
-	for (Thread* th : Threads) {
-		if (!th->threadStarted)
-			return 1;
-	}
-
-	usi_cmdexec(pos, states, cmd);
-
+	// 💡 "quit"はwasm_pre.jsが先に処理するので、ここには届かない。
+	wasm_usi->exec_command_from_js(std::string(c_cmd));
 	return 0;
 }
-#endif
-
 #endif
 
 } // namespace YaneuraOu

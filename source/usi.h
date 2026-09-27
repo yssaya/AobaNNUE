@@ -37,7 +37,14 @@ public:
 
 	// main threadをUSIメッセージの受信のために待機させる。
 	// "quit"コマンドが送られてくるまでこのループは抜けない。
+	// 📝 wasmではブラウザのメインスレッドをブロックできないため、このインスタンスを
+	//     usi_command()の実行先として登録するだけで即座にreturnする。
 	void loop();
+
+#if defined(__EMSCRIPTEN__)
+	// yaneuraou.wasm : JS側から渡されたUSIコマンドを1つ実行する。
+	void exec_command_from_js(const std::string& cmd) { usi_cmdexec(cmd); }
+#endif
 
 	// --------------------
 	// USI関係の記法変換部

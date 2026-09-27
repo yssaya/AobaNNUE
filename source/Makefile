@@ -217,7 +217,12 @@ else
 		EM_EXPORT_NAME=YaneuraOu
 		EM_INITIAL_MEMORY_SIZE=$(shell if [ $(MATERIAL_LEVEL) -ge 5 ]; then echo 385875968; else echo 138412032; fi)
 		CPPFLAGS += -Wno-unused-parameter
-		CPPFLAGS += -DUSE_WASM_SIMD -msimd128
+		# ⚠ USE_WASM_SIMDは定義しない。
+		#     eval/nnue/wasm_simd.cppのカーネルは重みを行優先の配置で読むが、
+		#     USE_SSE42からUSE_SSSE3が有効になるため、AffineTransform::GetWeightIndex()は
+		#     重みをSSSE3向けに並べ替えて格納する。この不整合により評価値が正しく計算されない。
+		#     定義しなくても-msse4.2と-msimd128により、SSSE3向けの実装がwasm simd128にコンパイルされる。
+		CPPFLAGS += -msimd128
 		CPPFLAGS += -DUSE_SSE42 -msse4.2
 		CPPFLAGS += -pthread
 		CPPFLAGS += -s STRICT=1
