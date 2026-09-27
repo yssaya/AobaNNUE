@@ -5552,11 +5552,18 @@ namespace {
 // 自作のエンジンのentry point
 void engine_main() {
 
+#if !defined(__EMSCRIPTEN__)
 	// ここで作ったエンジン
     YaneuraOuEngine engine;
 
     // USIコマンドの応答部
     USIEngine usi;
+#else
+    // 🌈 wasmではusi.loop()が即座にreturnするので、以後usi_command()から
+    //     使えるよう、staticにしてプロセス終了まで保持する。
+    static YaneuraOuEngine engine;
+    static USIEngine       usi;
+#endif
     usi.set_engine(engine);  // エンジン実装を差し替える。
 
     // USIコマンドの応答のためのループ

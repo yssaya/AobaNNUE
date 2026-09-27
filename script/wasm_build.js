@@ -6,76 +6,14 @@ const os = require("os");
 const process = require("process");
 const zlib = require("zlib");
 
+// 📝 AobaNNUEで使う、HalfKP 768x2-16-64の評価関数ファイル別読み込み(noeval)版だけをビルドする。
 const pkgobjs = [
   {
-    name: "halfkp",
-    edition: "YANEURAOU_ENGINE_NNUE",
-    exportname: "YaneuraOu_HalfKP",
-    extra: "ENGINE_NAME=Suisho5+YaneuraOu EVAL_EMBEDDING=ON EM_INITIAL_MEMORY_SIZE=167772160 EXTRA_CPPFLAGS='-DENGINE_OPTIONS=\\\"\"option=name=FV_SCALE=type=spin=default=24=min=1=max=128\\\"\"'",
+    name: "halfkp768.noeval",
+    edition: "YANEURAOU_ENGINE_NNUE_HALFKP_768X2_16_64",
+    exportname: "YaneuraOu_HalfKP768_noeval",
+    extra: "EM_INITIAL_MEMORY_SIZE=268435456",
     evalfile: true,
-  },
-  {
-    name: "k-p",
-    edition: "YANEURAOU_ENGINE_NNUE_KP256",
-    exportname: "YaneuraOu_K_P",
-    extra: "EVAL_EMBEDDING=ON EM_INITIAL_MEMORY_SIZE=92274688 EXTRA_CPPFLAGS='-DENGINE_OPTIONS=\\\"\"option=name=FV_SCALE=type=spin=default=24=min=1=max=128\\\"\"'",
-    evalfile: true,
-  },
-  {
-    name: "halfkp.noeval",
-    edition: "YANEURAOU_ENGINE_NNUE",
-    exportname: "YaneuraOu_HalfKP_noeval",
-    extra: "EM_INITIAL_MEMORY_SIZE=167772160",
-    evalfile: true,
-  },
-  {
-    name: "halfkpe9.noeval",
-    edition: "YANEURAOU_ENGINE_NNUE_HALFKPE9",
-    exportname: "YaneuraOu_HalfKPE9_noeval",
-    extra: "EM_INITIAL_MEMORY_SIZE=167772160",
-    evalfile: true,
-  },
-  {
-    name: "halfkpvm.noeval",
-    edition: "YANEURAOU_ENGINE_NNUE_HALFKP_VM_256X2_32_32",
-    exportname: "YaneuraOu_HalfKPvm_noeval",
-    extra: "EM_INITIAL_MEMORY_SIZE=167772160",
-    evalfile: true,
-  },
-  {
-    name: "k-p.noeval",
-    edition: "YANEURAOU_ENGINE_NNUE_KP256",
-    exportname: "YaneuraOu_K_P_noeval",
-    extra: "EM_INITIAL_MEMORY_SIZE=92274688",
-    evalfile: true,
-  },
-  {
-    name: "material",
-    edition: "YANEURAOU_ENGINE_MATERIAL",
-    exportname: "YaneuraOu_Material",
-    extra: "MATERIAL_LEVEL=1 EM_INITIAL_MEMORY_SIZE=92274688",
-    evalfile: false,
-  },
-  {
-    name: "material9",
-    edition: "YANEURAOU_ENGINE_MATERIAL",
-    exportname: "YaneuraOu_Material9",
-    extra: "MATERIAL_LEVEL=9 EM_INITIAL_MEMORY_SIZE=402653184",
-    evalfile: false,
-  },
-  {
-    name: "yaneuraou-mate",
-    edition: "YANEURAOU_MATE_ENGINE",
-    exportname: "YaneuraOu_MATE",
-    extra: "EM_INITIAL_MEMORY_SIZE=92274688",
-    evalfile: false,
-  },
-  {
-    name: "tanuki-mate",
-    edition: "TANUKI_MATE_ENGINE",
-    exportname: "tanuki_MATE",
-    extra: "EM_INITIAL_MEMORY_SIZE=92274688",
-    evalfile: false,
   },
 ];
 

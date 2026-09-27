@@ -49,16 +49,18 @@ Thread::Thread(
 
 #else
 	// yaneuraou.wasm
-	// wait_for_search_finished すると、ブラウザのメインスレッドをブロックしデッドロックが発生するため、コメントアウト。
+	// wait_for_search_finished すると、ブラウザのメインスレッドをブロックしデッドロックが発生するため、待機しない。
 	//
 	// 新しいスレッドが cv を設定するのを待ってから、ブラウザに処理をパスしたいが、
 	// 新しいスレッド用のworkerを作成するためには、いったんブラウザに処理をパスする必要がある。
 	//
 	// https://bugzilla.mozilla.org/show_bug.cgi?id=1049079
 	//
-	// threadStarted という変数を設けて全てのスレッドが開始するまでリトライするようにする
-	//
-	// 参考：https://github.com/lichess-org/stockfish.wasm/blob/a022fa1405458d1bc1ba22fe813bace961859102/src/thread.cpp#L38
+	// 📝 同じ理由でrun_custom_job()の完了も待てないため、workerは生成スレッド上で直接生成する。
+	//     run_custom_job()を経由する目的はNUMAノードにbindしたスレッド上で
+	//     workerのメモリを確保することだが、wasmにNUMAは無い。
+	this->numaAccessToken = binder();
+	this->worker          = std::move(worker_factory(thread_id, this->numaAccessToken));
 #endif
 }
 
